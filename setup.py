@@ -39,4 +39,5 @@ setup(
             'upgradeapp=main:main',
         ],
     },
+    py_modules=['main'],
 )

@@ -146,14 +146,31 @@ class PodmanUpgrader(BaseUpgrader):
                     if result.returncode == 0:
                         image = result.stdout.strip()
                         print(f"  Pulling latest image: {image}")
-                        subprocess.run(['podman', 'pull', image], timeout=300)
+                        pull_result = subprocess.run(['podman', 'pull', image], timeout=300)
+                        if pull_result.returncode != 0:
+                            print(f"  Warning: Failed to pull image {image}")
+                            continue
 
-                        print(f"  Recreating container: {container}")
-                        # Note: This is a simplified approach. In practice, you'd want to
-                        # preserve container configuration, volumes, networks, etc.
-                        subprocess.run(['podman', 'stop', container], timeout=60)
-                        subprocess.run(['podman', 'rm', container], timeout=30)
-                        # User would need to provide the run command to recreate container
+                        print(f"  Stopping container: {container}")
+                        stop_result = subprocess.run(['podman', 'stop', container], timeout=60)
+                        if stop_result.returncode != 0:
+                            print(f"  Warning: Failed to stop container {container}")
+                            continue
+
+                        print(f"  Removing container: {container}")
+                        rm_result = subprocess.run(['podman', 'rm', container], timeout=30)
+                        if rm_result.returncode != 0:
+                            print(f"  Warning: Failed to remove container {container}")
+                            continue
+
+                        # NOTE: Container recreation is not implemented in this basic template.
+                        # In a production environment, you would need to:
+                        # 1. Save the container configuration before stopping
+                        # 2. Recreate the container with the same configuration
+                        # 3. Preserve volumes, networks, environment variables, etc.
+                        # 4. Or use podman-compose/orchestration tools for automated recreation
+                        print(f"  WARNING: Container {container} has been removed but not recreated.")
+                        print(f"  You will need to manually recreate the container with its original configuration.")
 
             return True
         except Exception as e:
