@@ -1,0 +1,19 @@
+{
+  "upgrade_type": "app",
+  "dry_run": false,
+  "auto_confirm": false,
+  "log_level": "INFO",
+  "backup_before_upgrade": true,
+  "app_upgrader": {
+    "package_manager": "auto-detect",
+    "exclude_packages": []
+  },
+  "docker_upgrader": {
+    "registry": "docker.io",
+    "exclude_containers": []
+  },
+  "podman_upgrader": {
+    "registry": "docker.io",
+    "exclude_containers": []
+  }
+}

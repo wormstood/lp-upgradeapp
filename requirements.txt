@@ -1,0 +1,12 @@
+# Core dependencies
+# No external dependencies required for the basic template
+# Add specific dependencies as needed for your environment
+
+# Optional: For better CLI experience
+# argparse is part of standard library (Python 3.2+)
+
+# Future enhancements could include:
+# requests>=2.31.0  # For API-based updates
+# pyyaml>=6.0       # For YAML config support
+# rich>=13.0.0      # For beautiful terminal output
+# docker>=7.0.0     # For Docker SDK integration
